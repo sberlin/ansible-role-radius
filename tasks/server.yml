@@ -1,0 +1,19 @@
+---
+# server-specific task file for radius
+
+- include: service.yml
+
+- name: Configure radius server settings
+  template:
+    src: "{{ item.filename }}.j2"
+    dest: "{{ radius_config_dir }}/{{ item.dir }}/{{ item.filename }}"
+    owner: "{{ radius_user_name }}"
+    group: "{{ radius_user_name }}"
+    mode: 0640
+  with_items:
+    - filename: authorize
+      dir: mods-config/files
+    - filename: clients.conf
+      dir: .
+  notify:
+    restart radius

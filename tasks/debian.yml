@@ -1,0 +1,13 @@
+---
+# Debian-specific task file for radius
+
+- name: Install radius
+  apt:
+    name: "{{ item }}"
+    state: present
+    update_cache: 'True'
+  when:
+    - radius_config.is_server is defined
+    - radius_config.is_server
+  with_items:
+    "{{ radius_packages }}"

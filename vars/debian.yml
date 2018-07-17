@@ -1,0 +1,9 @@
+---
+# Debian-specific vars file for radius
+
+radius_packages:
+  - freeradius
+radius_config_base: /etc
+radius_config_dir: "{{ radius_config_base }}/freeradius/3.0"
+radius_service_name: freeradius
+radius_user_name: freerad

@@ -1,0 +1,14 @@
+galaxy_info:
+  author: sberlin
+  description: Configures FreeRADIUS server
+  license: "license MIT"
+  min_ansible_version: 2.4
+  platforms:
+    - name: Ubuntu
+      versions:
+        - 18
+  galaxy_tags:
+    - radius
+    - freeradius
+
+dependencies: []

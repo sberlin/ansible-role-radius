@@ -1,0 +1,7 @@
+---
+# handlers file for radius
+
+- name: restart radius
+  service:
+    name: "{{ radius_service_name }}"
+    state: restarted

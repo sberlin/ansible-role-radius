@@ -1,0 +1,7 @@
+---
+# config-specific task file for radius
+
+- include: server.yml
+  when:
+    - radius_config.is_server is defined
+    - radius_config.is_server

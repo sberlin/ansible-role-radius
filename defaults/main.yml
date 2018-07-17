@@ -1,0 +1,9 @@
+---
+# defaults file for radius
+
+radius_config:
+  is_server: true
+  users: []
+  server:
+    address: 127.0.0.1
+  clients: []

@@ -1,0 +1,8 @@
+---
+# service-specific task file for radius
+
+- name: Enable/Start radius
+  service:
+    name: "{{ radius_service_name }}"
+    state: started
+    enabled: yes
