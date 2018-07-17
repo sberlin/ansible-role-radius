@@ -5,3 +5,6 @@
   when:
     - radius_config.is_server is defined
     - radius_config.is_server
+
+- include: client.yml
+  when: (radius_config.is_server is not defined or radius_config.is_server == false)

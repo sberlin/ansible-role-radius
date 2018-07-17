@@ -1,0 +1,43 @@
+---
+# client-specific task file for radius
+
+- name: Create client config directories
+  file:
+    path: "{{ radius_client_dir }}"
+    state: directory
+    owner: root
+    group: root
+    mode: 0755
+
+- name: Retrieve radius client settings
+  shell: |
+    curl -L "{{ item }}" | tar -C "{{ radius_client_dir }}" --strip-components 5 -xzf - ppp-upstream/pppd/plugins/radius/etc/
+  with_items:
+    - "https://salsa.debian.org/debian/ppp/-/archive/upstream/ppp-upstream.tar.gz"
+
+- name: Replace values in radius client settings
+  replace:
+    path: "{{ radius_client_dir }}/radiusclient.conf"
+    regexp: "{{ item.regexp }}"
+    replace: >-
+      {{ item.replace }}
+  with_items:
+    - regexp: '/usr/local'
+      replace: ''
+    - regexp: '/etc/radiusclient'
+      replace: "{{ radius_client_dir }}"
+    - regexp: '^(?P<key>authserver\s+)localhost(:\d+)'
+      replace: '\g<key>{{ radius_config.server.address }}\2'
+    - regexp: '^(?P<key>acctserver\s+)localhost(?P<port>:\d+)'
+      replace: '\g<key>{{ radius_config.server.address }}\2'
+
+- name: Configure radius client connections
+  template:
+    src: "{{ item.filename }}.j2"
+    dest: "{{ radius_client_dir }}/{{ item.dir }}/{{ item.filename }}"
+    owner: root
+    group: root
+    mode: 0600
+  with_items:
+    - filename: servers
+      dir: .
