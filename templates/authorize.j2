@@ -1,5 +1,6 @@
 # {{ ansible_managed }}
 
+# username password_encryption password
 {% for user in radius_config.users %}
 {{ user.name }} Cleartext-Password := "{{ user.password }}"
 {% endfor %}
